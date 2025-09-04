@@ -2,13 +2,19 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { LearningPath } from '../types';
 
-if (!process.env.API_KEY) {
-  throw new Error("API_KEY environment variable not set");
+const apiKey = process.env.API_KEY || process.env.GEMINI_API_KEY;
+
+if (!apiKey) {
+  console.warn("API_KEY environment variable not set. The application will work but AI features will be disabled.");
 }
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+const ai = apiKey ? new GoogleGenAI({ apiKey }) : null;
 
 export const fetchLearningPath = async (interest: string): Promise<LearningPath> => {
+  if (!ai) {
+    throw new Error("API key not configured. Please set the GEMINI_API_KEY environment variable.");
+  }
+
   const prompt = `Based on the interest in "${interest}", generate a comprehensive learning path for a prospective student at the fictional 'Innovate University'. Provide details on a suitable program.`;
 
   const responseSchema = {
