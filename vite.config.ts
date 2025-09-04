@@ -20,7 +20,12 @@ export default defineConfig(({ mode }) => {
       preview: {
         host: '0.0.0.0',
         port: process.env.PORT ? parseInt(process.env.PORT) : 4173,
-        allowedHosts: 'all' // This disables host checking
+        allowedHosts: [
+          'learningpath-2odh.onrender.com',
+          'localhost',
+          '127.0.0.1',
+          '.onrender.com' // Allow all onrender.com subdomains
+        ]
       }
     };
 });
