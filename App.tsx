@@ -58,14 +58,16 @@ const App: React.FC = () => {
             </div>
           )}
 
-          <div className={`mt-10 transition-all duration-500 ${learningPath ? 'mb-12' : ''}`}>
-            <SearchBar 
-              value={interest}
-              onChange={(e) => setInterest(e.target.value)}
-              onSubmit={handleSubmit}
-              isLoading={isLoading}
-            />
-          </div>
+          {!learningPath && (
+            <div className="mt-10 transition-all duration-500 flex justify-center">
+              <SearchBar 
+                value={interest}
+                onChange={(e) => setInterest(e.target.value)}
+                onSubmit={handleSubmit}
+                isLoading={isLoading}
+              />
+            </div>
+          )}
 
           {error && <p className="mt-4 text-red-600">{error}</p>}
 
@@ -76,7 +78,7 @@ const App: React.FC = () => {
             </div>
           )}
 
-          {learningPath && <LearningPathDisplay data={learningPath} />}
+          {learningPath && <LearningPathDisplay data={learningPath} onBackToSearch={handleReset} />}
         </div>
       </main>
       
